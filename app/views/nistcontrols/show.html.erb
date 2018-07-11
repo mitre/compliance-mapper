@@ -1,0 +1,151 @@
+<p id="notice">
+    <%= notice %>
+</p>
+<style>
+#nestedlist,
+#nestedlist ul {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 30px;
+    text-indent: -4px;
+}
+
+blockquote {
+    padding: 6px 12px;
+    margin: 0 0 24px;
+    border-left: 5px solid #eee;
+}
+
+#baseStatement {
+    padding-left: 10px;
+}
+
+#Statement {
+    padding-left: 2%;
+}
+
+#SubStatement {
+    padding-left: 5%;
+}
+
+
+
+/* UL Layer 1 Rules */
+
+#nestedlist {
+    /*list-style-image:url(http://placehold.it/5x15/ff0000);*/
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+
+
+
+/* UL Layer 2 Rules */
+
+#nestedlist ul {
+    /*list-style-image:url(http://placehold.it/5x15/00ff00);*/
+    font-size: 18px;
+    font-weight: normal;
+    margin-top: 3px;
+}
+
+
+
+
+
+/* UL Layer 3 Rules */
+
+#nestedlist ul ul {
+    /*list-style-image:url(http://placehold.it/5x15/0000ff);*/
+    font-size: 16px;
+}
+
+
+
+
+
+/* UL 4 Rules */
+
+#nestedlist ul ul ul {
+    /*list-style-image:url(http://placehold.it/5x15/ffff00);*/
+    font-size: 14px;
+}
+</style>
+<p>
+    <strong>Family:</strong>
+    <%= @nistcontrol.family %>
+</p>
+<p>
+    <strong>Number:</strong>
+    <%= @nistcontrol.number %>
+</p>
+<p>
+    <strong>Title:</strong>
+    <%= @nistcontrol.title %>
+</p>
+<p>
+    <strong>Priority:</strong>
+    <%= @nistcontrol.priority %>
+</p>
+<p>
+    <strong>Withdrawn:</strong>
+    <%= @nistcontrol.withdrawn %>
+</p>
+<p>
+    <strong>Control Description: </strong>
+    <br/>
+    <div id="baseStatement">
+        <%=@nistcontrol.basestatement%>
+    </div>
+    <br/>
+    <% @statements = Statement.where(nistcontrol_id: @nistcontrol.id).all  %>
+        <% @statements.each do |statement| %>
+            <div id="Statement">
+                <%= statement.number.remove(@nistcontrol.number) + "  " + statement.description %>
+            </div>
+            <br/>
+            <% @substatements = Substatement.where(statement_id: statement.id).all %>
+                <% @substatements.each do |substatement| %>
+                    <div id="SubStatement">
+                        <%=substatement.number.remove(@nistcontrol.number) + "  " + substatement.description %>
+                    </div>
+                    <br/>
+                    <%end %>
+                        <%end %>
+</p>
+<p>
+    <strong>Supplemental Guidance Description: </strong>
+    <blockquote>
+        <%= @nistcontrol.SGdescription %>
+    </blockquote>
+</p>
+<p>
+    <strong>Related Controls: </strong>
+    <% @nistcontrol.SGrelated.split(',').each do |related| %>
+        <a href="/nistcontrols/<%= Nistcontrol.where(number: related).ids[0]%>">
+            <%=related + ", "%>
+        </a>
+        <%end %>
+</p>
+<p>
+    <strong>Control Enhancements: </strong>
+    <br/>
+    <br/>
+    <table class="table table-hover table-striped">
+        <tbody>
+            <%@controlenhancements =  Controlenhancement.where(nistcontrol_id: @nistcontrol.id).all %>
+                <%@controlenhancements.each do |enhancement| %>
+                    <tr id="enhancement">
+                        <th nowrap="">
+                            <span id=""><%= enhancement.number %></span>
+                        </th>
+                    </tr>
+                <%end %>
+        </tbody>
+    </table>
+</p>
+<%= link_to 'Edit', edit_nistcontrol_path(@nistcontrol) %> |
+    <%= link_to 'Back', nistcontrols_path %>

@@ -1,0 +1,47 @@
+<%= form_with(model: nistcontrol, local: true) do |form| %>
+  <% if nistcontrol.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(nistcontrol.errors.count, "error") %> prohibited this nistcontrol from being saved:</h2>
+
+      <ul>
+      <% nistcontrol.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :family %>
+    <%= form.text_area :family %>
+  </div>
+
+  <div class="field">
+    <%= form.label :number %>
+    <%= form.text_area :number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_area :title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :priority %>
+    <%= form.text_area :priority %>
+  </div>
+
+  <div class="field">
+    <%= form.label :basestatement %>
+    <%= form.text_area :basestatement %>
+  </div>
+
+  <div class="field">
+    <%= form.label :withdrawn %>
+    <%= form.text_area :withdrawn %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

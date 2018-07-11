@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  family: MyText
+  number: MyText
+  title: MyText
+  priority: MyText
+  basestatement: MyText
+  withdrawn: MyText
+
+two:
+  family: MyText
+  number: MyText
+  title: MyText
+  priority: MyText
+  basestatement: MyText
+  withdrawn: MyText

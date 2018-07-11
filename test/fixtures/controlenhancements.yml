@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nistcontrols_id: 1
+  number: MyString
+  title: MyString
+  baselineimpact: MyString
+  SGdesc: MyString
+  SGrelated: MyString
+
+two:
+  nistcontrols_id: 1
+  number: MyString
+  title: MyString
+  baselineimpact: MyString
+  SGdesc: MyString
+  SGrelated: MyString

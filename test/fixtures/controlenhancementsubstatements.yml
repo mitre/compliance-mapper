@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  controlenhancements_id: 1
+  number: MyString
+  description: MyString
+
+two:
+  controlenhancements_id: 1
+  number: MyString
+  description: MyString
