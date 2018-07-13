@@ -31,7 +31,7 @@ sync-repo:
   script:
     - git clone https://aaronlippold:$(echo $GITHUB_ACCESS_TOKEN)@github.com/aaronlippold/compliance-mapper compliance-mapper >/dev/null 2>/dev/null
     - cd compliance-mapper
-    - git remote add github git@gitlab.mitre.org:nsharma/compliance-mapper.git
+    - git remote add github git@gitlab.mitre.org:inspec/compliance-mapper.git
     - ssh-agent sh -c 'ssh-add ~/push_key; git push --tags github master || true' # REMOTE NAME from previous line
 # build:
 #   stage: build

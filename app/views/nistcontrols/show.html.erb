@@ -17,10 +17,20 @@ blockquote {
     border-left: 5px solid #eee;
 }
 
-#baseStatement {
-    padding-left: 10px;
-}
 
+
+
+
+/*#CETable{
+    margin-left: 3%;
+}*/
+
+#baseStatement {
+    margin-left: 10px;
+}
+#StatementID{
+    padding-left: 2%
+}
 #Statement {
     padding-left: 2%;
 }
@@ -31,6 +41,11 @@ blockquote {
 
 
 
+
+
+
+
+
 /* UL Layer 1 Rules */
 
 #nestedlist {
@@ -38,6 +53,11 @@ blockquote {
     font-size: 20px;
     font-weight: bold;
 }
+
+
+
+
+
 
 
 
@@ -56,12 +76,22 @@ blockquote {
 
 
 
+
+
+
+
+
 /* UL Layer 3 Rules */
 
 #nestedlist ul ul {
     /*list-style-image:url(http://placehold.it/5x15/0000ff);*/
     font-size: 16px;
 }
+
+
+
+
+
 
 
 
@@ -134,7 +164,7 @@ blockquote {
     <strong>Control Enhancements: </strong>
     <br/>
     <br/>
-    <table class="table table-hover table-striped">
+    <table class="table table-hover table-striped" id="CETable">
         <tbody>
             <%@controlenhancements =  Controlenhancement.where(nistcontrol_id: @nistcontrol.id).all %>
                 <%@controlenhancements.each do |enhancement| %>
@@ -142,8 +172,44 @@ blockquote {
                         <th nowrap="">
                             <span id=""><%= enhancement.number %></span>
                         </th>
+                        <td>
+                            <%= enhancement.title %>
+                                <br>
+                                <strong><%= enhancement.baseControlEnhancementDescription%></strong>
+                                <table class="table table-hover table-condensed table-striped">
+                                    <tbody>
+                                        <% @statements = Controlenhancementstatement.where(controlenhancement_id: enhancement.id).all %>
+                                        <% @statements.each do |statement|%>
+                                            <tr>
+                                                <th id="StatementID" width="10%"><%= statement.number %></th>
+                                                <td><pre><%= statement.description %></pre></td>
+                                            </tr>
+                                        <%end%> 
+                                    </tbody>
+                                </table>
+                                <span id="">
+                                    
+                                    <span id="">
+                                        <div class="controlDetailSection">
+                                            <u><span id="">Supplemental Guidance:</span></u>
+                                <span class="controlDetailValue">
+                                                <%= enhancement.SGdesc %>
+                                                <br>
+                                                <% if enhancement.SGrelated != nil%>
+                                                    Related to: 
+                                                        <% enhancement.SGrelated.split(',').each do |related| %>
+                                                            <a href="/nistcontrols/<%= Nistcontrol.where(number: related).ids[0]%>">
+                                                            <%=related + ", "%>
+                                                            </a>
+                                                        <%end%>
+                                                <%end%>
+                                            </span>
+                                </div>
+                                </span>
+                                </span>
+                        </td>
                     </tr>
-                <%end %>
+                    <%end %>
         </tbody>
     </table>
 </p>
