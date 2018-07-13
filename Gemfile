@@ -50,6 +50,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem "font-awesome-rails"
   gem 'roo-xls'
+  gem 'popper_js', '~> 1.11', '>= 1.11.1'  
   gem 'jquery-datatables-rails'
   gem 'jquery-rails'
   gem 'bootstrap-sass'

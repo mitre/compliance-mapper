@@ -33,6 +33,25 @@ sync-repo:
     - cd compliance-mapper
     - git remote add github git@gitlab.mitre.org:inspec/compliance-mapper.git
     - ssh-agent sh -c 'ssh-add ~/push_key; git push --tags github master || true' # REMOTE NAME from previous line
+build:
+  stage: build
+  image: docker:latest
+
+  before_script:
+    # add the MITRE certificates to the docker image
+    - apk update && apk add git openssh-client ca-certificates py-pip rsync
+    - wget -O /usr/local/share/ca-certificates/MITRE_BA_Root.crt $CRT_R
+    - wget -O /usr/local/share/ca-certificates/MITRE_BA_NPE_CA-1.crt $CRT_1
+    - wget -O /usr/local/share/ca-certificates/MITRE_BA_NPE_CA-3.crt $CRT_3
+    - update-ca-certificates
+  
+  script:
+# Passenger
+    - rsync -prult --delete --exclude=.git --exclude-from=.gitignore ./ /var/www/compliance-mapper
+    - chown -R 1008:1009 /var/www/compliance-mapper
+    - mkdir -p /var/www/compliance-mapper/tmp/
+    - touch /var/www/compliance-mapper/tmp/restart.txt
+
 # build:
 #   stage: build
 #   image: docker:latest

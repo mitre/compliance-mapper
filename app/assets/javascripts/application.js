@@ -16,6 +16,7 @@
 //= require jquery.dataTables.min
 //= require dataTables.bootstrap4.min
 //= require jquery.slimscroll
+//= require popper
 //= require turbolinks
 //= require_tree .
 //= require bootstrap.min

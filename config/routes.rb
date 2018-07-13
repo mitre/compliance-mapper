@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :mappings
   resources :iacontrols
   resources :nistcontrols
   resources :controls

@@ -138,6 +138,6 @@ iacontrolarray.each do |ia_control|
 								 name: ia_control.name,
 								 description: ia_control.desc,
 								 number: ia_control.id)
-	p ia_control.id + ": " + ia_control.mapping.join(',')
+	#p ia_control.id + ": " + ia_control.mapping.join(',')
 end
 
