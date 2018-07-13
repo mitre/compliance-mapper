@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_11_125529) do
+ActiveRecord::Schema.define(version: 2018_07_13_150509) do
 
   create_table "controlenhancements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "nistcontrol_id"
@@ -45,6 +45,18 @@ ActiveRecord::Schema.define(version: 2018_07_11_125529) do
     t.text "title"
     t.text "description"
     t.text "publisher"
+    t.text "path"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "iacontrols", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "nistcontrolnumber"
+    t.string "controlSubjectArea"
+    t.string "impact"
+    t.string "name"
+    t.text "description", limit: 4294967295
+    t.string "number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nistcontrolnumber: MyString
+  controlSubjectArea: MyString
+  impact: MyString
+  name: MyString
+  description: MyString
+  number: MyString
+
+two:
+  nistcontrolnumber: MyString
+  controlSubjectArea: MyString
+  impact: MyString
+  name: MyString
+  description: MyString
+  number: MyString

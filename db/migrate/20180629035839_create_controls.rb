@@ -4,6 +4,7 @@ class CreateControls < ActiveRecord::Migration[5.2]
       t.text :title
       t.text :description
       t.text :publisher
+      t.text :path
 
       t.timestamps
     end

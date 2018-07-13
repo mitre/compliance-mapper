@@ -49,12 +49,11 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem "font-awesome-rails"
-  gem 'jquery-rails'
+  gem 'roo-xls'
   gem 'jquery-datatables-rails'
   gem 'jquery-rails'
   gem 'bootstrap-sass'
   gem 'jquery-ui-rails'
-  gem 'jquery-datatables-rails'
   gem 'nokogiri-happymapper', :require => 'happymapper'
 end
 

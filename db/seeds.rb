@@ -6,10 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'services/NISTAttributes'
+require 'services/IAcontrols'
 
 
-Control.create(title: '800-53 NIST Controls', description: "NIST Special Publication 800-53 provides a catalog of security controls for all U.S. federal information systems except those related to national security. It is published by the National Institute of Standards and Technology, which is a non-regulatory agency of the United States Department of Commerce. NIST develops and issues standards, guidelines, and other publications to assist federal agencies in implementing the Federal Information Security Management Act of 2002 (FISMA) and to help with managing cost effective programs to protect their information and information systems.", publisher: "NIST")
-Control.create(title: '8500.2 IA Controls', description: "An objective DoDI 8500.2 IA condition of integrity, availability, or confidentiality achieved through the application of specific safeguards or through the regulation of specific activities that is expressed in a specified format (i.e., a control number, a control name, control text, and a control class). Specific management, personnel, operational, and technical controls are applied to each DoD information system to achieve an appropriate level of integrity, availability, and confidentiality in accordance with OMB Circular A-130 (reference (v)).", publisher: "DoDI")
+Control.create(title: '800-53 NIST Controls', description: "NIST Special Publication 800-53 provides a catalog of security controls for all U.S. federal information systems except those related to national security. It is published by the National Institute of Standards and Technology, which is a non-regulatory agency of the United States Department of Commerce. NIST develops and issues standards, guidelines, and other publications to assist federal agencies in implementing the Federal Information Security Management Act of 2002 (FISMA) and to help with managing cost effective programs to protect their information and information systems.", publisher: "NIST", path: '/nistcontrols')
+Control.create(title: '8500.2 IA Controls', description: "An objective DoDI 8500.2 IA condition of integrity, availability, or confidentiality achieved through the application of specific safeguards or through the regulation of specific activities that is expressed in a specified format (i.e., a control number, a control name, control text, and a control class). Specific management, personnel, operational, and technical controls are applied to each DoD information system to achieve an appropriate level of integrity, availability, and confidentiality in accordance with OMB Circular A-130 (reference (v)).", publisher: "DoDI", path: '/iacontrols')
 #Nistcontrol.create(family: "ACCESS CONTROL" , number: "AC-3" , title: "ACCESS ENFORCEMENT", priority: "P1" , basestatement: "The information system enforces approved authorizations for logical access to information           and system resources in accordance with applicable access control policies." , withdrawn: "False")
 
 
@@ -37,7 +38,7 @@ nist_controls.control.each do |nist_control|
 									 impact: controlImpacts, 
 									 SGdescription: controlSupplementalGuidanceDescription,
 									 SGrelated: controlSupplementalGuidanceRelated)
-	p "nistID: #{nistControl.id}"
+	#p "nistID: #{nistControl.id}"
 	if(nist_control.statements.statement != nil)
 		controlstatement = ''
 		controlStatements = nist_control.statements.statement
@@ -78,7 +79,7 @@ nist_controls.control.each do |nist_control|
 			controlEnhancement[:enhancement_params][:SGdesc] = enhancement.supplementalguidance != nil ? enhancement.supplementalguidance.description : "N/A"
 			controlEnhancement[:enhancement_params][:SGrelated] = enhancement.supplementalguidance != nil ? enhancement.supplementalguidance.relatedcontrols : "N/A"
 			controlenhancement = nistControl.controlenhancements.create(controlEnhancement[:enhancement_params])
-			p "		CE_ID: #{controlenhancement.number}"
+			#p "		CE_ID: #{controlenhancement.number}"
 			if(enhancement.statements != nil)
 				enhancement.statements.statement.each do |statement|
 					# CREATE CONTROL ENHANCEMENT STATEMENTS HERE
@@ -89,7 +90,7 @@ nist_controls.control.each do |nist_control|
 					controlEnhancementStatement[:statement_params][:description] = statement.description
 					controlenhancementstatement = controlenhancement.controlenhancementstatements.create(controlEnhancementStatement[:statement_params])
 					#p nist_control.number + ": " + statement.number
-					p "			CEStatement_ID: #{controlenhancementstatement.number}"
+					#p "			CEStatement_ID: #{controlenhancementstatement.number}"
 					if(statement.substatements != nil)
 						statement.substatements.each do |substatement|
 							# CREATE CONTROL ENHANCEMENT SUBSTATEMENTS HERE
@@ -99,7 +100,7 @@ nist_controls.control.each do |nist_control|
 							controlEnhancementSubStatement[:substatement_params][:number] = substatement.number
 							controlEnhancementSubStatement[:substatement_params][:description] = substatement.description
 							controlenhancementsubstatement = controlenhancementstatement.controlenhancementsubstatements.create(controlEnhancementSubStatement[:substatement_params])
-							p "				CESubStatement_ID: #{controlenhancementsubstatement.number}"
+							#p "				CESubStatement_ID: #{controlenhancementsubstatement.number}"
 
 						end
 					end
@@ -107,32 +108,36 @@ nist_controls.control.each do |nist_control|
 			end
 		end
 	end
-
-
-
 end
 
+xlsx = Spreadsheet.open 'data/DIACAPtoNIST'
+sheet = xlsx.worksheet 0
+iacontrolarray = []
+sheet.each do |row|
+			if !row[0].nil?
+				temp = Services::IAControl.new(row[0], row[1], row[2])
+				if row[29] != nil
+					if row[29].index(':') != nil
+					# p row[0] 
+					# p row[29][row[29].index(':')+1..-1].strip.split(',')
+					temp.mapping = row[29][row[29].index(':')+1..-1].strip.split(',')
+					#p temp.id + ": " + temp.mapping.join(',')
+					iacontrolarray << temp
+					end
+				end
+				#p "hello".index('l')
+			else
+				next
+			end
+			#p row[0] unless row[0].nil?
+end
+iacontrolarray.each do |ia_control|
+	iaControl = Iacontrol.create(nistcontrolnumber: ia_control.mapping.join(','),
+								 controlSubjectArea: " ",
+								 impact: " ",
+								 name: ia_control.name,
+								 description: ia_control.desc,
+								 number: ia_control.id)
+	p ia_control.id + ": " + ia_control.mapping.join(',')
+end
 
-
-
-
-
-
-# nist_controls.control.each do |nist_control|
-# 	statementnums = []
-# 	statementdesc = []
-# 	substatementnums = []
-# 	substatementdesc = []
-# 	nist_control.statements.statement.each do |statement|
-# 		statementnums << statement.number
-# 		statementdesc << statement.description
-# 		statement.substatements.each do |substatement|
-# 			substatementnums << substatement.number
-# 			substatementdesc << substatement.description
-# 		end
-# 	end
-# 	nistcontrol = Nistcontrol.create(family: nist_control.family , number: nist_control.number , title: nist_control.title , priority: nist_control.priority, basestatement: nist_control.statements.description, withdrawn: nist_withdrawn,
-# 		basestatementdesc: basestatementdesc, statementnums: statementnums.join(","), statementdesc: statementdesc.join("|"), substatementnums: substatementnums.join(","), 
-# 		substatementdesc: substatementdesc.join("|"), SGdesc: sgdesc, 
-# 		SGrelated: sgrelated)
-# end

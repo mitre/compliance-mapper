@@ -1,0 +1,47 @@
+<%= form_with(model: iacontrol, local: true) do |form| %>
+  <% if iacontrol.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(iacontrol.errors.count, "error") %> prohibited this iacontrol from being saved:</h2>
+
+      <ul>
+      <% iacontrol.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :nistcontrolnumber %>
+    <%= form.text_field :nistcontrolnumber %>
+  </div>
+
+  <div class="field">
+    <%= form.label :controlSubjectArea %>
+    <%= form.text_field :controlSubjectArea %>
+  </div>
+
+  <div class="field">
+    <%= form.label :impact %>
+    <%= form.text_field :impact %>
+  </div>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_field :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :number %>
+    <%= form.text_field :number %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

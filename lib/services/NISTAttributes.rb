@@ -120,6 +120,7 @@ class Controls
 
 	has_many :control, Control, tag: 'control'
 end
+
 end
 
 #controls_xml = File.read('.../800-53-controls.xml')

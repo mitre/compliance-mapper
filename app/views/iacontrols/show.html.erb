@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nistcontrolnumber:</strong>
+  <%= @iacontrol.nistcontrolnumber %>
+</p>
+
+<p>
+  <strong>Controlsubjectarea:</strong>
+  <%= @iacontrol.controlSubjectArea %>
+</p>
+
+<p>
+  <strong>Impact:</strong>
+  <%= @iacontrol.impact %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @iacontrol.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @iacontrol.description %>
+</p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @iacontrol.number %>
+</p>
+
+<%= link_to 'Edit', edit_iacontrol_path(@iacontrol) %> |
+<%= link_to 'Back', iacontrols_path %>
