@@ -14,11 +14,11 @@
 <script>
 $(document).on("click", ".swal2-container input[name='swal2-radio']", function() {
     var id = $('input[name=swal2-radio]:checked').val();
-    console.log('id: ' + id);
+    //console.log('id: ' + id);
 });
 $('#generateMappings').click(function() {
     $('#mappings').html("")
-    console.log("Button clicked")
+    //console.log("Button clicked")
     var control = $('#controlInput').val()
     var inputOptions = ["All Mappings"]
     $.ajax({
@@ -27,7 +27,7 @@ $('#generateMappings').click(function() {
         dataType: "json",
         success: function(result) {
             result.forEach(function(entry) {
-                console.log(entry);
+                //console.log(entry);
                 inputOptions.push(entry.title)
             });
             swal({
@@ -44,7 +44,7 @@ $('#generateMappings').click(function() {
                     });
                 }
             }).then(function(result) {
-                console.log(result)
+                //console.log(result)
                 // swal({
                 //     type: 'success',
                 //     html: 'You selected: ' + control + ' to ' + inputOptions[result.value]
@@ -56,7 +56,7 @@ $('#generateMappings').click(function() {
 });
 
 function getMappings(controlID, mapping) {
-    console.log(controlID + " " + mapping)
+    //console.log(controlID + " " + mapping)
     if (mapping == "All Mappings") {
         swal("Feature is being worked on currently")
         return;
@@ -70,7 +70,7 @@ function getMappings(controlID, mapping) {
             data: { id },
             success: function(result) {
                 //alert(result);
-                console.log(result[0])
+                //console.log(result[0])
                 populateDiv(controlID, result[0], "NIST")
             }
         });
@@ -84,7 +84,7 @@ function getMappings(controlID, mapping) {
             data: { id },
             success: function(result) {
                 //alert(result);
-                console.log(result)
+                //console.log(result)
                 populateDiv(controlID, result, "IA")
             }
         });
@@ -100,9 +100,9 @@ function populateDiv(originalControl, result, mapTo) {
         })
     } else if (mapTo == "NIST") {
         mappingArray = result.nistcontrolnumber.split(", ")
-        divHTML = result.number + " maps to the following " + mapTo + " controls:" + '<ul'
+        divHTML = result.number + " maps to the following " + mapTo + " controls:" + '<ul>'
         mappingArray.forEach(function(entry) {
-            console.log(entry);
+            //console.log(entry);
             id = entry
             $.ajax({
                 type: "GET",
@@ -111,15 +111,15 @@ function populateDiv(originalControl, result, mapTo) {
                 data: { id },
                 success: function(result) {
                     //alert(result);
-                    console.log(result[0].id)
+                    //console.log(result[0].id)
                     divHTML += '<li><a href="/nistcontrols/' + result[0].id + '">' + entry + '</a></li>'
-                    console.log(divHTML)
+                    //console.log(divHTML)
                     populateMappings(divHTML)
                 }
             });
         });
     } else if (mapTo == "IA") {
-        console.log(result)
+        //console.log(result)
         divHTML = originalControl + " maps to the following " + mapTo + " controls:" + '<ul>'
         result.forEach(function(entry) {
             divHTML += '<li><a href="/iacontrols/' + entry.id + '">' + entry.number + '</a></li>'
@@ -129,7 +129,7 @@ function populateDiv(originalControl, result, mapTo) {
 }
 
 function populateMappings(html) {
-    console.log(html)
+    console.log(html + '</ul>')
     $('#mappings').html(html + '</ul>')
 }
 </script>
