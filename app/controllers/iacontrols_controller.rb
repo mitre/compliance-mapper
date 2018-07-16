@@ -51,6 +51,14 @@ class IacontrolsController < ApplicationController
     end
   end
 
+  def convertToNIST
+    @diacap = Iacontrol.where(number: params[:id])
+    respond_to do |format|
+      format.html
+      format.json {render json: @diacap}
+    end
+  end
+
   # DELETE /iacontrols/1
   # DELETE /iacontrols/1.json
   def destroy
@@ -60,7 +68,6 @@ class IacontrolsController < ApplicationController
       format.json { head :no_content }
     end
   end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_iacontrol
@@ -69,6 +76,6 @@ class IacontrolsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def iacontrol_params
-      params.require(:iacontrol).permit(:nistcontrolnumber, :controlSubjectArea, :impact, :name, :description, :number)
+      params.require(:iacontrol).permit(:nistcontrolnumber, :controlSubjectArea, :impact, :name, :description, :number, )
     end
 end

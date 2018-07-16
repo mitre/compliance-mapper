@@ -21,6 +21,25 @@ class NistcontrolsController < ApplicationController
   def edit
   end
 
+  def convertNumberToID
+    nistnumber = params[:id]
+    nistnumber_shortened = nistnumber.include?("(")? nistnumber[0..nistnumber.index('(')-1] : nistnumber
+    @nist = Nistcontrol.where(number: nistnumber_shortened)
+    respond_to do |format|
+      format.html
+      format.json {render json: @nist}
+    end
+  end
+
+  def convertToIA
+    @nistNumber = params[:id]
+    @mappedIAs = Iacontrol.where("nistcontrolnumber like ?", "%#{@nistNumber}%").all
+    respond_to do |format|
+      format.html
+      format.json {render json: @mappedIAs}
+    end
+  end
+
   # POST /nistcontrols
   # POST /nistcontrols.json
   def create

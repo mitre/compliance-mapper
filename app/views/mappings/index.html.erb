@@ -3,50 +3,135 @@
 </p>
 <h1>Mappings</h1>
 <br/>
-<% y = 'test' %>
 <div class="input-group mb-3">
-    <div class="input-group-prepend">
-        <button type="button" class="btn btn-outline-secondary">Generate Mappings</button>
-        <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="sr-only">Toggle Dropdown</span>
-        </button>
-        <div class="dropdown-menu">
-            <% x = Control.all.each do |control| %>
-              <!-- <a class="dropdown-item" href="#">Action<%= x %></a> -->
-              <a class="dropdown-item" href="#"><%=control.title %></a>
-              <%  %>
-            <% end %>
-        </div>
+    <input type="text" id="controlInput" class="form-control" placeholder="Enter Control To Map" aria-label="Recipient's username" aria-describedby="basic-addon2">
+    <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button" id="generateMappings">Generate Mappings</button>
     </div>
-    <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
 </div>
 <div id="mappings">
-      <% control = Nistcontrol.find(Nistcontrol.where(number: "AC-2").ids[0]) %>
-      <%= y %>
 </div>
+<script>
+$(document).on("click", ".swal2-container input[name='swal2-radio']", function() {
+    var id = $('input[name=swal2-radio]:checked').val();
+    console.log('id: ' + id);
+});
+$('#generateMappings').click(function() {
+    $('#mappings').html("")
+    console.log("Button clicked")
+    var control = $('#controlInput').val()
+    var inputOptions = ["All Mappings"]
+    $.ajax({
+        type: "GET",
+        url: "controls",
+        dataType: "json",
+        success: function(result) {
+            result.forEach(function(entry) {
+                console.log(entry);
+                inputOptions.push(entry.title)
+            });
+            swal({
+                title: 'Which mappings would you like?',
+                input: 'radio',
+                inputOptions: inputOptions,
+                inputValidator: function(result) {
+                    return new Promise(function(resolve, reject) {
+                        if (result) {
+                            resolve();
+                        } else {
+                            reject('You need to select something!');
+                        }
+                    });
+                }
+            }).then(function(result) {
+                console.log(result)
+                // swal({
+                //     type: 'success',
+                //     html: 'You selected: ' + control + ' to ' + inputOptions[result.value]
+                // });
+                getMappings(control, inputOptions[result.value])
+            })
+        }
+    })
+});
 
+function getMappings(controlID, mapping) {
+    console.log(controlID + " " + mapping)
+    if (mapping == "All Mappings") {
+        swal("Feature is being worked on currently")
+        return;
+    } else if (mapping == "800-53 NIST Controls") {
+        console.log("converting IA TO NIST")
+        var id = controlID
+        $.ajax({
+            type: "GET",
+            url: "iacontrols/convertToNIST",
+            dataType: "json",
+            data: { id },
+            success: function(result) {
+                //alert(result);
+                console.log(result[0])
+                populateDiv(controlID, result[0], "NIST")
+            }
+        });
+    } else if (mapping == "8500.2 IA Controls") {
+        console.log("convering NIST TO IA")
+        var id = controlID
+        $.ajax({
+            type: "GET",
+            url: "nistcontrols/convertToIA",
+            dataType: "json",
+            data: { id },
+            success: function(result) {
+                //alert(result);
+                console.log(result)
+                populateDiv(controlID, result, "IA")
+            }
+        });
+    }
+}
 
-<!-- <table>
-    <thead>
-        <tr>
-            <th colspan="3"></th>
-        </tr>
-    </thead>
-    <tbody>
-        <% @mappings.each do |mapping| %>
-            <tr>
-                <td>
-                    <%= link_to 'Show', mapping %>
-                </td>
-                <td>
-                    <%= link_to 'Edit', edit_mapping_path(mapping) %>
-                </td>
-                <td>
-                    <%= link_to 'Destroy', mapping, method: :delete, data: { confirm: 'Are you sure?' } %>
-                </td>
-            </tr>
-            <% end %>
-    </tbody>
-</table> -->
+function populateDiv(originalControl, result, mapTo) {
+    if (result == null || result.length == 0) {
+        swal({
+            type: 'error',
+            title: 'Oops...',
+            text: 'No ' + mapTo + ' mappings exist for ' + originalControl,
+        })
+    } else if (mapTo == "NIST") {
+        mappingArray = result.nistcontrolnumber.split(", ")
+        divHTML = result.number + " maps to the following " + mapTo + " controls:" + '<ul'
+        mappingArray.forEach(function(entry) {
+            console.log(entry);
+            id = entry
+            $.ajax({
+                type: "GET",
+                url: "nistcontrols/convertNumberToID",
+                dataType: "json",
+                data: { id },
+                success: function(result) {
+                    //alert(result);
+                    console.log(result[0].id)
+                    divHTML += '<li><a href="/nistcontrols/' + result[0].id + '">' + entry + '</a></li>'
+                    console.log(divHTML)
+                    populateMappings(divHTML)
+                }
+            });
+        });
+    } else if (mapTo == "IA") {
+        console.log(result)
+        divHTML = originalControl + " maps to the following " + mapTo + " controls:" + '<ul>'
+        result.forEach(function(entry) {
+            divHTML += '<li><a href="/iacontrols/' + entry.id + '">' + entry.number + '</a></li>'
+        })
+        populateMappings(divHTML)
+    }
+}
+
+function populateMappings(html) {
+    console.log(html)
+    $('#mappings').html(html + '</ul>')
+}
+</script>
 <br>
-<%= link_to 'New Mapping', new_mapping_path %>
+<// link_to 'New Mapping', new_mapping_path %>

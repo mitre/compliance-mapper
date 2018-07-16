@@ -10,9 +10,10 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require rails-ujs
+//= require sweetalert2
 //= require jquery
 //= require jquery_ujs
+//= require rails-ujs
 //= require jquery.dataTables.min
 //= require dataTables.bootstrap4.min
 //= require jquery.slimscroll

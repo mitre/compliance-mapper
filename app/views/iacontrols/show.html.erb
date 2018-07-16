@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Nistcontrolnumber:</strong>
-  <%= @iacontrol.nistcontrolnumber %>
+  <strong>Number:</strong>
+  <%= @iacontrol.number %>
 </p>
 
 <p>
@@ -25,9 +25,15 @@
   <%= @iacontrol.description %>
 </p>
 
+
+
 <p>
-  <strong>Number:</strong>
-  <%= @iacontrol.number %>
+  <strong>Nistcontrolnumber:</strong>
+  <%= @iacontrol.nistcontrolnumber %>
+</p>
+
+<p>
+  <%= link_to 'More Information', 'https://www.stigviewer.com/controls/8500/' + @iacontrol.number %>
 </p>
 
 <%= link_to 'Edit', edit_iacontrol_path(@iacontrol) %> |

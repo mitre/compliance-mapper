@@ -52,7 +52,6 @@
                 <th>Number</th>
                 <th>Title</th>
                 <th>Priority</th>
-                <th>Description</th>
                 <th>Withdrawn</th>
                 <th></th>
                 <th></th>
@@ -73,9 +72,6 @@
                   <td><%= nistcontrol.number %></td>
                   <td><%= nistcontrol.title %></td>
                   <td><%= nistcontrol.priority %></td>
-                  <td>
-                    ""
-                  </td>
                   <td><%= nistcontrol.withdrawn %></td>
                   <td><%= link_to 'More Information', nistcontrol %></td>
                   <td><%= link_to 'Destroy', nistcontrol, method: :delete, data: { confirm: 'Are you sure?' } %></td>
