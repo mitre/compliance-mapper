@@ -85,7 +85,7 @@
                                 <% iacontroltoNISTarray =  iacontrol.nistcontrolnumber.split(',') %>
                                     <% iacontroltoNISTarray.each do |iaToNIST| %>
                                         <% nistnumber = iaToNIST.include?("(")? iaToNIST[0..iaToNIST.index('(')-1] : iaToNIST%>
-                                        <a href="/compliance-mapper/nistcontrols/<%= Nistcontrol.where(number: nistnumber.strip).ids[0]%>">
+                                        <a href="/nistcontrols/<%= Nistcontrol.where(number: nistnumber.strip).ids[0]%>">
                                             <%=iaToNIST + ", "%>
                                         </a>
                                         <%= %>
