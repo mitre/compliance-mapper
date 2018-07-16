@@ -1,15 +1,18 @@
-<p id="notice">
+<!-- <p id="notice">
     <%= notice %>
-</p>
-<h1>Mappings</h1>
-<br/>
-<div class="input-group mb-3">
-    <input type="text" id="controlInput" class="form-control" placeholder="Enter Control To Map" aria-label="Recipient's username" aria-describedby="basic-addon2">
-    <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button" id="generateMappings">Generate Mappings</button>
+</p> -->
+<div class="container">
+    <!-- Content here -->
+    <h1>Mappings</h1>
+    <br/>
+    <div class="input-group mb-3">
+        <input type="text" id="controlInput" class="form-control" placeholder="Enter Control To Map" aria-label="Recipient's username" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" id="generateMappings">Generate Mappings</button>
+        </div>
     </div>
-</div>
-<div id="mappings">
+    <div id="mappings">
+    </div>
 </div>
 <script>
 $(document).on("click", ".swal2-container input[name='swal2-radio']", function() {

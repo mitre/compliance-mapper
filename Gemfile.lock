@@ -122,7 +122,7 @@ GEM
     msgpack (1.2.4)
     multi_json (1.13.1)
     nio4r (2.3.1)
-    nokogiri (1.8.3)
+    nokogiri (1.8.4)
       mini_portile2 (~> 2.3.0)
     nokogiri-happymapper (0.6.0)
       nokogiri (~> 1.5)
@@ -225,6 +225,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  autoprefixer-rails
   bootsnap (>= 1.1.0)
   bootstrap-sass
   byebug
@@ -237,6 +238,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   listen (>= 3.0.5, < 3.2)
+  nokogiri (~> 1.8, >= 1.8.4)
   nokogiri-happymapper
   popper_js (~> 1.11, >= 1.11.1)
   puma (~> 3.11)
