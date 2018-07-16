@@ -5,7 +5,7 @@ class CreateIacontrols < ActiveRecord::Migration[5.2]
       t.string :controlSubjectArea
       t.string :impact
       t.string :name
-      t.longtext :description
+      t.text :description
       t.string :number
 
       t.timestamps

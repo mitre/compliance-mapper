@@ -3,7 +3,7 @@ class CreateSubstatements < ActiveRecord::Migration[5.2]
     create_table :substatements do |t|
       t.integer :StatementID
       t.string :number
-      t.longtext :description
+      t.text :description
 
       t.timestamps
     end

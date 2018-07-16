@@ -3,7 +3,7 @@ class CreateStatements < ActiveRecord::Migration[5.2]
     create_table :statements do |t|
       t.integer :NISTControlID
       t.string :number
-      t.longtext :description
+      t.text :description
 
       t.timestamps
     end

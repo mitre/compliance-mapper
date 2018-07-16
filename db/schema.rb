@@ -12,36 +12,36 @@
 
 ActiveRecord::Schema.define(version: 2018_07_13_162424) do
 
-  create_table "controlenhancements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "controlenhancements", force: :cascade do |t|
     t.integer "nistcontrol_id"
     t.string "number"
     t.string "title"
     t.string "baselineimpact"
-    t.text "baseControlEnhancementDescription", limit: 4294967295
+    t.text "baseControlEnhancementDescription"
     t.text "withdrawn"
-    t.text "SGdesc", limit: 4294967295
+    t.text "SGdesc"
     t.string "SGrelated"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "controlenhancementstatements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "controlenhancementstatements", force: :cascade do |t|
     t.integer "controlenhancement_id"
     t.string "number"
-    t.text "description", limit: 4294967295
+    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "controlenhancementsubstatements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "controlenhancementsubstatements", force: :cascade do |t|
     t.integer "controlenhancementstatement_id"
     t.string "number"
-    t.text "description", limit: 4294967295
+    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "controls", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "controls", force: :cascade do |t|
     t.text "title"
     t.text "description"
     t.text "publisher"
@@ -50,23 +50,23 @@ ActiveRecord::Schema.define(version: 2018_07_13_162424) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "iacontrols", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "iacontrols", force: :cascade do |t|
     t.string "nistcontrolnumber"
     t.string "controlSubjectArea"
     t.string "impact"
     t.string "name"
-    t.text "description", limit: 4294967295
+    t.text "description"
     t.string "number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "mappings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "mappings", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "nistcontrols", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "nistcontrols", force: :cascade do |t|
     t.text "family"
     t.text "number"
     t.text "title"
@@ -80,18 +80,18 @@ ActiveRecord::Schema.define(version: 2018_07_13_162424) do
     t.text "SGrelated"
   end
 
-  create_table "statements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "statements", force: :cascade do |t|
     t.integer "nistcontrol_id"
     t.string "number"
-    t.text "description", limit: 4294967295
+    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "substatements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "substatements", force: :cascade do |t|
     t.integer "statement_id"
     t.string "number"
-    t.text "description", limit: 4294967295
+    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

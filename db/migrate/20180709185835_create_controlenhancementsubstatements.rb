@@ -3,7 +3,7 @@ class CreateControlenhancementsubstatements < ActiveRecord::Migration[5.2]
     create_table :controlenhancementsubstatements do |t|
       t.integer :controlenhancementstatement_id
       t.string :number
-      t.longtext :description
+      t.text :description
 
       t.timestamps
     end

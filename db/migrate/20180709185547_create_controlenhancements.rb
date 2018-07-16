@@ -5,9 +5,9 @@ class CreateControlenhancements < ActiveRecord::Migration[5.2]
       t.string :number
       t.string :title
       t.string :baselineimpact
-      t.longtext :baseControlEnhancementDescription
+      t.text :baseControlEnhancementDescription
       t.text :withdrawn
-      t.longtext :SGdesc
+      t.text :SGdesc
       t.string :SGrelated
 
       t.timestamps
